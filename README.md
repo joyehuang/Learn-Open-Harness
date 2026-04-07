@@ -1,36 +1,127 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# 🤖 学习 OpenHarness
 
-First, run the development server:
+**面向零基础学习者的 AI Agent 基础设施交互式教程**
+
+*An interactive tutorial for understanding AI Agent infrastructure from the ground up*
+
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=next.js)](https://nextjs.org)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)](https://www.typescriptlang.org)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
+[![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-radix--luma-black?style=flat-square)](https://ui.shadcn.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+
+[**在线体验 →**](https://learn-openharness.vercel.app) &nbsp;·&nbsp; [提 Issue](https://github.com/joyehuang/Learn-Open-Harness/issues) &nbsp;·&nbsp; [贡献内容](#贡献)
+
+</div>
+
+---
+
+## 🌟 这是什么？
+
+AI Agent 正在改变软件开发的方式。而 **OpenHarness** 是让大语言模型从「只会说话」变成「能做事」的关键基础设施 —— 它是 Claude Code、Cursor 等 AI 编程助手背后的架构模式。
+
+但 OpenHarness 的源码有 **~11,700 行**，概念繁多，门槛不低。
+
+这个项目把它拆解成 **12 个章节、4 个阶段**，用通俗类比 + 真实代码 + 交互演示，带你从零理解每一个核心概念。**不需要任何 AI 或编程基础。**
+
+## ✨ 特性
+
+- **📖 12 章系统课程** — 从「什么是 AI Agent」到「多 Agent 协作」，循序渐进
+- **🎮 交互式组件** — Agent Loop 动画、工具模拟器、权限沙盒、架构图，边玩边学
+- **🧠 即时测验** — 每章内嵌小测验，实时检验理解程度
+- **📊 学习进度追踪** — 自动记录完成章节，随时继续
+- **🌙 深色模式** — 精心设计的深海蓝配色，护眼友好
+- **📱 移动端适配** — 手机、平板、桌面全平台可用
+
+## 📚 课程大纲
+
+### Phase A · 基础认知
+| # | 章节 | 核心概念 |
+|---|------|---------|
+| 01 | 什么是 AI Agent | LLM vs Agent，从「说话」到「做事」 |
+| 02 | 什么是 Harness | Agent 的装备系统 |
+| 03 | Harness 公式 | Tools + Knowledge + Observation + Action + Permissions |
+
+### Phase B · 核心机制
+| # | 章节 | 核心概念 |
+|---|------|---------|
+| 04 | Agent Loop | 思考→行动→观察的无限循环 |
+| 05 | 工具系统 | 43+ 内置工具，统一接口 + 注册表模式 |
+| 06 | 权限系统 | 三级安全护栏，让 Agent 安全执行 |
+| 07 | Hook 系统 | 生命周期事件，在关键时刻插入自定义逻辑 |
+
+### Phase C · 智能层
+| # | 章节 | 核心概念 |
+|---|------|---------|
+| 08 | Skills 技能系统 | 按需加载的知识库 |
+| 09 | Memory 记忆系统 | 跨对话持久化记忆，四种记忆类型 |
+| 10 | MCP 集成 | 标准化连接外部世界的 USB 接口 |
+
+### Phase D · 进阶
+| # | 章节 | 核心概念 |
+|---|------|---------|
+| 11 | 多 Agent 协作 | 并行子 Agent，分而治之 |
+| 12 | 全流程串联 | 从用户输入到响应的完整旅程 |
+
+## 🚀 快速开始
 
 ```bash
+# 克隆仓库
+git clone https://github.com/joyehuang/Learn-Open-Harness.git
+cd Learn-Open-Harness
+
+# 安装依赖
+npm install
+
+# 启动开发服务器
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+打开 [http://localhost:3000](http://localhost:3000) 即可开始学习。
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 一键部署
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/joyehuang/Learn-Open-Harness)
 
-## Learn More
+## 🛠 技术栈
 
-To learn more about Next.js, take a look at the following resources:
+| 技术 | 用途 |
+|------|------|
+| [Next.js 16](https://nextjs.org) | App Router，服务端渲染 |
+| [TypeScript 5](https://www.typescriptlang.org) | 类型安全 |
+| [Tailwind CSS v4](https://tailwindcss.com) | 样式系统 |
+| [shadcn/ui](https://ui.shadcn.com) (radix-luma) | UI 组件库 |
+| [next-themes](https://github.com/pacocoursey/next-themes) | 深色模式 |
+| [Prism](https://prismjs.com) | 代码高亮 |
+| [HugeIcons](https://hugeicons.com) | 图标系统 |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🤝 贡献
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+非常欢迎任何形式的贡献！
 
-## Deploy on Vercel
+- **修正内容错误**：直接提 PR 修改 `src/content/chapter-XX.ts`
+- **新增章节**：参考现有章节格式，在 `src/content/` 下新建文件
+- **改进交互组件**：`src/components/interactive/` 目录下
+- **翻译**：欢迎将内容翻译为其他语言
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+src/content/
+├── types.ts          # 内容类型定义
+├── chapters.ts       # 章节注册
+├── chapter-01.ts     # 第 1 章内容
+└── ...
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+每个章节由若干 `section` 组成，支持 `text`、`analogy`、`code`、`quiz`、`key-concept`、`comparison`、`diagram` 等类型，结构清晰，修改门槛极低。
+
+## 📄 许可证
+
+MIT License — 自由使用、修改、分发。
+
+---
+
+<div align="center">
+  <sub>如果这个项目对你有帮助，欢迎点个 ⭐ Star，让更多人发现它</sub>
+</div>

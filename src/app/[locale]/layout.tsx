@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { locales, isValidLocale } from "@/i18n/config";
 import type { Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
+import { getChapters } from "@/content/chapters";
 import { Providers } from "@/components/providers";
 import Sidebar from "@/components/layout/Sidebar";
 
@@ -20,10 +21,11 @@ export default async function LocaleLayout({
   if (!isValidLocale(locale)) notFound();
 
   const dict = await getDictionary(locale as Locale);
+  const chapters = getChapters(locale as Locale);
 
   return (
     <Providers>
-      <Sidebar locale={locale as Locale} dict={dict} />
+      <Sidebar locale={locale as Locale} dict={dict} chapters={chapters} />
       <main className="flex-1 overflow-y-auto">{children}</main>
     </Providers>
   );

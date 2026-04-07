@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { chapters } from "@/content/chapters";
+import { getChapters } from "@/content/chapters";
 import { PHASES } from "@/content/types";
 import { isValidLocale } from "@/i18n/config";
 import type { Locale } from "@/i18n/config";
@@ -14,6 +14,7 @@ export default async function HomePage({
   const { locale } = await params;
   if (!isValidLocale(locale)) notFound();
   const dict = await getDictionary(locale as Locale);
+  const chapters = getChapters(locale as Locale);
   const t = dict.home;
 
   const grouped = Object.entries(PHASES).map(([key, { color }]) => ({

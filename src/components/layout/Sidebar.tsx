@@ -1,24 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import { useTheme } from "next-themes";
+import { Menu, X } from "lucide-react";
 import type { Chapter } from "@/content/types";
 import { PHASES } from "@/content/types";
 import { isChapterCompleted, resetProgress } from "@/lib/progress";
 import { Progress } from "@/components/ui/progress";
-import { Button } from "@/components/ui/button";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Moon02Icon, Sun03Icon } from "@hugeicons/core-free-icons";
 import type { Locale } from "@/i18n/config";
-import { locales } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/types";
-
-const localeLabels: Record<Locale, string> = {
-  "zh-CN": "中文",
-  en: "EN",
-};
 
 export default function Sidebar({
   locale,
@@ -30,8 +21,6 @@ export default function Sidebar({
   chapters: Chapter[];
 }) {
   const pathname = usePathname();
-  const router = useRouter();
-  const { theme, setTheme } = useTheme();
   const [completedSlugs, setCompletedSlugs] = useState<Set<string>>(new Set());
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -52,14 +41,6 @@ export default function Sidebar({
     label: dict.phases[key] || key,
     items: chapters.filter((c) => c.phase === key),
   }));
-
-  function switchLocale(newLocale: Locale) {
-    // Set cookie for proxy to remember
-    document.cookie = `locale=${newLocale};path=/;max-age=${60 * 60 * 24 * 365}`;
-    // Replace locale in current path
-    const newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
-    router.push(newPath);
-  }
 
   const sidebarContent = (
     <div className="flex flex-col h-full">
@@ -129,39 +110,6 @@ export default function Sidebar({
         ))}
       </nav>
 
-      {/* Footer */}
-      <div className="p-3 border-t border-border space-y-1">
-        {/* Language switcher */}
-        <div className="flex gap-1 px-2 py-1">
-          {locales.map((l) => (
-            <button
-              key={l}
-              onClick={() => switchLocale(l)}
-              className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
-                l === locale
-                  ? "bg-primary/10 text-primary"
-                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
-              }`}
-            >
-              {localeLabels[l]}
-            </button>
-          ))}
-        </div>
-        {/* Dark mode toggle */}
-        <Button
-          variant="ghost"
-          size="sm"
-          className="w-full justify-start gap-2 text-muted-foreground"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        >
-          <HugeiconsIcon
-            icon={theme === "dark" ? Sun03Icon : Moon02Icon}
-            className="size-4"
-            strokeWidth={1.5}
-          />
-          {theme === "dark" ? dict.sidebar.lightMode : dict.sidebar.darkMode}
-        </Button>
-      </div>
     </div>
   );
 
@@ -173,13 +121,7 @@ export default function Sidebar({
         className="fixed top-3 left-3 z-50 lg:hidden bg-background shadow-md rounded-lg p-2 border border-border"
         aria-label="Toggle menu"
       >
-        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          {mobileOpen ? (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          ) : (
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          )}
-        </svg>
+        {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
       </button>
 
       {/* Mobile overlay */}

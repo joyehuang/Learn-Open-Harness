@@ -20,6 +20,8 @@
 
 </div>
 
+> The interactive companion to [HKUDS/OpenHarness](https://github.com/HKUDS/OpenHarness) — built the day after OpenHarness launched.
+
 > **如果这个零基础教程帮到你，点个 ⭐ 支持一下开源 AI 教育项目～ 目标 10k stars！**
 
 ---

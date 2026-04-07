@@ -20,6 +20,8 @@
 
 </div>
 
+> The interactive companion to [HKUDS/OpenHarness](https://github.com/HKUDS/OpenHarness) — built the day after OpenHarness launched.
+
 > **If this zero-to-hero tutorial helps you understand AI Agents, give us a ⭐ — Goal: 10k stars!**
 
 ---

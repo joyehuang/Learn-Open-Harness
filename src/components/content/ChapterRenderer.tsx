@@ -18,14 +18,10 @@ import ArchitectureDiagram from "@/components/interactive/ArchitectureDiagram";
 
 function SectionRenderer({
   section,
-  chapterSlug,
-  quizIndex,
   locale,
   dict,
 }: {
   section: ContentSection;
-  chapterSlug: string;
-  quizIndex: number;
   locale: Locale;
   dict: Dictionary;
 }) {
@@ -86,8 +82,6 @@ function SectionRenderer({
     case "quiz":
       return section.quiz ? (
         <Quiz
-          chapterSlug={chapterSlug}
-          questionIndex={quizIndex}
           quiz={section.quiz}
           dict={dict.quiz}
         />
@@ -130,8 +124,6 @@ export default function ChapterRenderer({
     markChapterCompleted(chapter.slug);
   }, [chapter.slug]);
 
-  let quizCounter = 0;
-
   return (
     <div className="max-w-3xl mx-auto px-6 py-10 lg:py-16">
       {/* Chapter header */}
@@ -147,13 +139,10 @@ export default function ChapterRenderer({
 
       {/* Sections */}
       {chapter.sections.map((section, i) => {
-        const qi = section.type === "quiz" ? quizCounter++ : 0;
         return (
           <SectionRenderer
             key={i}
             section={section}
-            chapterSlug={chapter.slug}
-            quizIndex={qi}
             locale={locale}
             dict={dict}
           />

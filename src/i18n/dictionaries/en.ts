@@ -12,6 +12,7 @@ const dictionary: Dictionary = {
     title: "Learn OpenHarness",
     subtitle: "AI Agent Infrastructure Guide",
     progress: "Progress",
+    resetProgress: "Reset Progress",
     lightMode: "Light Mode",
     darkMode: "Dark Mode",
   },

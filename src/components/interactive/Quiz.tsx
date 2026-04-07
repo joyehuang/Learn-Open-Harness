@@ -5,13 +5,11 @@ import type { QuizQuestion } from "@/content/types";
 import type { Dictionary } from "@/i18n/types";
 
 interface QuizProps {
-  chapterSlug: string;
-  questionIndex: number;
   quiz: QuizQuestion;
   dict: Dictionary["quiz"];
 }
 
-export default function Quiz({ chapterSlug, questionIndex, quiz, dict }: QuizProps) {
+export default function Quiz({ quiz, dict }: QuizProps) {
   const [selected, setSelected] = useState<number | null>(null);
   const [revealed, setRevealed] = useState(false);
 

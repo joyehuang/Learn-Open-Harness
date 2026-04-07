@@ -57,8 +57,8 @@ export default function PermissionSimulator({
   }));
 
   return (
-    <div className="my-6 bg-white rounded-xl border border-gray-200 p-5">
-      <div className="text-xs font-semibold text-indigo-500 mb-3">
+    <div className="my-6 bg-card rounded-xl border border-border p-5">
+      <div className="text-xs font-semibold text-primary mb-3">
         {dict.title}
       </div>
 
@@ -70,8 +70,8 @@ export default function PermissionSimulator({
             onClick={() => setMode(m)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               mode === m
-                ? "bg-indigo-600 text-white shadow-md"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                ? "bg-primary text-primary-foreground shadow-md"
+                : "bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground"
             }`}
           >
             {dict.modes[m]}
@@ -79,7 +79,7 @@ export default function PermissionSimulator({
         ))}
       </div>
 
-      <p className="text-sm text-gray-500 mb-4">{dict.modeDescriptions[mode]}</p>
+      <p className="text-sm text-muted-foreground mb-4">{dict.modeDescriptions[mode]}</p>
 
       {/* Actions */}
       <div className="space-y-1.5">
@@ -88,11 +88,11 @@ export default function PermissionSimulator({
           return (
             <div
               key={action.name}
-              className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+              className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-muted transition-colors"
             >
               <div className="flex items-center gap-2 text-sm">
                 <span>{action.icon}</span>
-                <span className="text-gray-700">{action.name}</span>
+                <span className="text-foreground">{action.name}</span>
               </div>
               <span
                 className={`px-2.5 py-1 rounded-full text-xs font-medium ${status.color}`}

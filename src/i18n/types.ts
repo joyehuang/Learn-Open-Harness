@@ -7,6 +7,7 @@ export interface Dictionary {
     title: string;
     subtitle: string;
     progress: string;
+    resetProgress: string;
     lightMode: string;
     darkMode: string;
   };

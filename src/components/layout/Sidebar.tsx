@@ -2,11 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { Menu, X } from "lucide-react";
 import type { Chapter } from "@/content/types";
 import { PHASES } from "@/content/types";
-import { isChapterCompleted, resetProgress } from "@/lib/progress";
+import {
+  getCompletedChaptersSnapshot,
+  getServerCompletedChaptersSnapshot,
+  resetProgress,
+  subscribeToProgress,
+} from "@/lib/progress";
 import { Progress } from "@/components/ui/progress";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/types";
@@ -21,22 +26,22 @@ export default function Sidebar({
   chapters: Chapter[];
 }) {
   const pathname = usePathname();
-  const [completedSlugs, setCompletedSlugs] = useState<Set<string>>(new Set());
   const [mobileOpen, setMobileOpen] = useState(false);
+  const completedSnapshot = useSyncExternalStore(
+    subscribeToProgress,
+    getCompletedChaptersSnapshot,
+    getServerCompletedChaptersSnapshot,
+  );
 
-  useEffect(() => {
-    const slugs = new Set<string>();
-    chapters.forEach((c) => {
-      if (isChapterCompleted(c.slug)) slugs.add(c.slug);
-    });
-    setCompletedSlugs(slugs);
-  }, [pathname]);
+  const completedSlugs = new Set(
+    completedSnapshot ? completedSnapshot.split("\n") : [],
+  );
 
   const completedCount = completedSlugs.size;
   const totalCount = chapters.length;
   const progressPct = Math.round((completedCount / totalCount) * 100);
 
-  const grouped = Object.entries(PHASES).map(([key, { color }]) => ({
+  const grouped = Object.entries(PHASES).map(([key]) => ({
     phase: key,
     label: dict.phases[key] || key,
     items: chapters.filter((c) => c.phase === key),
@@ -47,7 +52,7 @@ export default function Sidebar({
       {/* Header */}
       <div className="p-5 border-b border-border">
         <Link href={`/${locale}`} className="block" onClick={() => setMobileOpen(false)}>
-          <h1 className="text-lg font-bold text-indigo-600">
+          <h1 className="text-lg font-bold text-primary">
             {dict.sidebar.title}
           </h1>
           <p className="text-xs text-gray-500 mt-0.5">
@@ -63,6 +68,16 @@ export default function Sidebar({
             </span>
           </div>
           <Progress value={progressPct} className="h-1.5" />
+          {completedCount > 0 && (
+            <button
+              onClick={() => {
+                resetProgress();
+              }}
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors mt-1"
+            >
+              {dict.sidebar.resetProgress}
+            </button>
+          )}
         </div>
       </div>
 

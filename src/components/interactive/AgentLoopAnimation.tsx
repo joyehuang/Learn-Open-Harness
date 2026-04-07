@@ -8,8 +8,8 @@ const highlights = ["user", "llm", "tool-call", "permission", "execute", "result
 
 const boxColors = [
   "bg-blue-100 border-blue-300 text-blue-700",
-  "bg-purple-100 border-purple-300 text-purple-700",
-  "bg-indigo-100 border-indigo-300 text-indigo-700",
+  "bg-slate-100 border-slate-300 text-slate-700",
+  "bg-sky-100 border-sky-300 text-sky-700",
   "bg-red-100 border-red-300 text-red-700",
   "bg-emerald-100 border-emerald-300 text-emerald-700",
   "bg-amber-100 border-amber-300 text-amber-700",
@@ -34,8 +34,8 @@ export default function AgentLoopAnimation({
   const step = dict.steps[currentStep];
 
   return (
-    <div className="my-6 bg-white rounded-xl border border-gray-200 p-5">
-      <div className="text-xs font-semibold text-indigo-500 mb-4">
+    <div className="my-6 bg-card rounded-xl border border-border p-5">
+      <div className="text-xs font-semibold text-primary mb-4">
         {dict.title}
       </div>
 
@@ -50,7 +50,7 @@ export default function AgentLoopAnimation({
               className={`absolute px-4 py-2 rounded-lg border-2 text-sm font-medium transition-all duration-300 ${
                 isActive
                   ? `${boxColors[i]} scale-110 shadow-lg`
-                  : "bg-gray-50 border-gray-200 text-gray-400"
+                  : "bg-muted border-border text-muted-foreground"
               }`}
               style={{ left: pos.x, top: pos.y }}
             >
@@ -75,14 +75,14 @@ export default function AgentLoopAnimation({
       </div>
 
       {/* Current step info */}
-      <div className="bg-gray-50 rounded-lg p-4 mb-4">
+      <div className="bg-muted rounded-lg p-4 mb-4">
         <div className="flex items-center gap-2 mb-1">
           <span className="text-xl">{icons[currentStep]}</span>
-          <span className="font-semibold text-gray-900">
+          <span className="font-semibold text-foreground">
             {dict.stepPrefix} {currentStep + 1} {dict.stepSuffix}：{step.label}
           </span>
         </div>
-        <p className="text-sm text-gray-600 ml-8">{step.description}</p>
+        <p className="text-sm text-muted-foreground ml-8">{step.description}</p>
       </div>
 
       {/* Controls */}
@@ -90,7 +90,7 @@ export default function AgentLoopAnimation({
         <button
           onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
           disabled={currentStep === 0}
-          className="px-4 py-2 text-sm rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 disabled:opacity-30 disabled:cursor-not-allowed"
+          className="px-4 py-2 text-sm rounded-lg border border-border text-muted-foreground hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed"
         >
           {dict.prev}
         </button>
@@ -100,7 +100,7 @@ export default function AgentLoopAnimation({
               key={i}
               onClick={() => setCurrentStep(i)}
               className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                i === currentStep ? "bg-indigo-500" : "bg-gray-300"
+                i === currentStep ? "bg-primary" : "bg-muted"
               }`}
             />
           ))}
@@ -110,7 +110,7 @@ export default function AgentLoopAnimation({
             setCurrentStep(Math.min(dict.steps.length - 1, currentStep + 1))
           }
           disabled={currentStep === dict.steps.length - 1}
-          className="px-4 py-2 text-sm rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 disabled:opacity-30 disabled:cursor-not-allowed"
+          className="px-4 py-2 text-sm rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-30 disabled:cursor-not-allowed"
         >
           {dict.next}
         </button>

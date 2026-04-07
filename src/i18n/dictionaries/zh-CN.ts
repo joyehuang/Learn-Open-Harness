@@ -12,6 +12,7 @@ const dictionary: Dictionary = {
     title: "OpenHarness 学习",
     subtitle: "AI Agent 基础设施入门指南",
     progress: "学习进度",
+    resetProgress: "重置进度",
     lightMode: "浅色模式",
     darkMode: "深色模式",
   },

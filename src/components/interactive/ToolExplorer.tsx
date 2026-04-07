@@ -44,8 +44,8 @@ export default function ToolExplorer({
   });
 
   return (
-    <div className="my-6 bg-white rounded-xl border border-gray-200 p-5">
-      <div className="text-xs font-semibold text-indigo-500 mb-3">
+    <div className="my-6 bg-card rounded-xl border border-border p-5">
+      <div className="text-xs font-semibold text-primary mb-3">
         {dict.title.replace("{count}", String(tools.length))}
       </div>
 
@@ -55,7 +55,7 @@ export default function ToolExplorer({
         placeholder={dict.searchPlaceholder}
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm mb-3 focus:outline-none focus:border-indigo-300"
+        className="w-full px-3 py-2 border border-input rounded-lg text-sm mb-3 focus:outline-none focus:border-ring bg-background text-foreground"
       />
 
       {/* Category filters */}
@@ -66,8 +66,8 @@ export default function ToolExplorer({
             onClick={() => setFilter(cat)}
             className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
               filter === cat
-                ? "bg-indigo-600 text-white"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                ? "bg-primary text-primary-foreground"
+                : "bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground"
             }`}
           >
             {dict.categories[cat] || cat}
@@ -80,10 +80,10 @@ export default function ToolExplorer({
         {filtered.map((tool) => (
           <div
             key={tool.name}
-            className="p-3 rounded-lg border border-gray-100 hover:border-indigo-200 hover:bg-indigo-50/30 transition-all"
+            className="p-3 rounded-lg border border-border hover:border-primary/30 hover:bg-muted/50 transition-all"
           >
             <div className="flex items-center gap-2 mb-1">
-              <span className="font-mono text-sm font-semibold text-gray-900">
+              <span className="font-mono text-sm font-semibold text-foreground">
                 {tool.name}
               </span>
               {tool.readOnly && (
@@ -92,15 +92,15 @@ export default function ToolExplorer({
                 </span>
               )}
             </div>
-            <p className="text-xs text-gray-500">{tool.description}</p>
-            <span className="inline-block mt-1 text-[10px] text-gray-400">
+            <p className="text-xs text-muted-foreground">{tool.description}</p>
+            <span className="inline-block mt-1 text-[10px] text-muted-foreground">
               {dict.categories[tool.category] || tool.category}
             </span>
           </div>
         ))}
       </div>
       {filtered.length === 0 && (
-        <p className="text-center text-gray-400 text-sm py-8">{dict.noResults}</p>
+        <p className="text-center text-muted-foreground text-sm py-8">{dict.noResults}</p>
       )}
     </div>
   );

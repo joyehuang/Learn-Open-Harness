@@ -53,6 +53,6 @@ export interface Chapter {
 export const PHASES = {
   A: { label: "基础认知", color: "emerald" },
   B: { label: "核心机制", color: "blue" },
-  C: { label: "智能层", color: "purple" },
+  C: { label: "智能层", color: "slate" },
   D: { label: "进阶", color: "amber" },
 } as const;

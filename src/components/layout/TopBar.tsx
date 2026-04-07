@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { Sun, Moon, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,11 +17,19 @@ export default function TopBar({ locale }: { locale: Locale }) {
   const pathname = usePathname();
   const router = useRouter();
   const { theme, setTheme } = useTheme();
+  const [pendingLocale, setPendingLocale] = useState<Locale | null>(null);
+
+  useEffect(() => {
+    if (!pendingLocale) return;
+
+    document.cookie = `locale=${pendingLocale};path=/;max-age=${60 * 60 * 24 * 365}`;
+    const newPath = pathname.replace(`/${locale}`, `/${pendingLocale}`);
+    router.push(newPath);
+  }, [locale, pathname, pendingLocale, router]);
 
   function switchLocale(newLocale: Locale) {
-    document.cookie = `locale=${newLocale};path=/;max-age=${60 * 60 * 24 * 365}`;
-    const newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
-    router.push(newPath);
+    if (newLocale === locale) return;
+    setPendingLocale(newLocale);
   }
 
   const nextLocale = locales.find((l) => l !== locale) || locales[0];

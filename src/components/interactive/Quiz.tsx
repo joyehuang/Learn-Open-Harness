@@ -4,12 +4,10 @@ import { useState } from "react";
 import type { QuizQuestion } from "@/content/types";
 
 interface QuizProps {
-  chapterSlug: string;
-  questionIndex: number;
   quiz: QuizQuestion;
 }
 
-export default function Quiz({ chapterSlug, questionIndex, quiz }: QuizProps) {
+export default function Quiz({ quiz }: QuizProps) {
   const [selected, setSelected] = useState<number | null>(null);
   const [revealed, setRevealed] = useState(false);
 

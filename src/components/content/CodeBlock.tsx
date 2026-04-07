@@ -31,7 +31,7 @@ export default function CodeBlock({ code }: CodeBlockProps) {
                 <div
                   key={i}
                   {...getLineProps({ line })}
-                  className={`${isHighlighted ? "bg-indigo-500/20 -mx-4 px-4 border-l-2 border-indigo-400" : ""}`}
+                  className={`${isHighlighted ? "bg-primary/20 -mx-4 px-4 border-l-2 border-primary" : ""}`}
                 >
                   <span className="inline-block w-8 text-right mr-4 text-gray-500 select-none text-xs">
                     {i + 1}

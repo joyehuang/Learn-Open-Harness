@@ -1,4 +1,5 @@
 const STORAGE_KEY = "openharness-learn-progress";
+const PROGRESS_EVENT = "openharness-learn-progress-change";
 
 export interface Progress {
   completedChapters: string[];
@@ -17,6 +18,12 @@ function getProgress(): Progress {
 
 function saveProgress(p: Progress) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
+  emitProgressChange();
+}
+
+function emitProgressChange() {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new Event(PROGRESS_EVENT));
 }
 
 export function isChapterCompleted(slug: string): boolean {
@@ -37,4 +44,26 @@ export function getCompletedCount(): number {
 
 export function resetProgress() {
   localStorage.removeItem(STORAGE_KEY);
+  emitProgressChange();
+}
+
+export function getCompletedChaptersSnapshot(): string {
+  return getProgress().completedChapters.join("\n");
+}
+
+export function getServerCompletedChaptersSnapshot(): string {
+  return "";
+}
+
+export function subscribeToProgress(callback: () => void) {
+  if (typeof window === "undefined") return () => {};
+
+  const handler = () => callback();
+  window.addEventListener(PROGRESS_EVENT, handler);
+  window.addEventListener("storage", handler);
+
+  return () => {
+    window.removeEventListener(PROGRESS_EVENT, handler);
+    window.removeEventListener("storage", handler);
+  };
 }

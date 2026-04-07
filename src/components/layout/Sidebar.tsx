@@ -2,11 +2,16 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useSyncExternalStore } from "react";
 import { useTheme } from "next-themes";
 import { chapters } from "@/content/chapters";
 import { PHASES } from "@/content/types";
-import { isChapterCompleted, resetProgress } from "@/lib/progress";
+import {
+  getCompletedChaptersSnapshot,
+  getServerCompletedChaptersSnapshot,
+  resetProgress,
+  subscribeToProgress,
+} from "@/lib/progress";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -15,16 +20,16 @@ import { Moon02Icon, Sun03Icon } from "@hugeicons/core-free-icons";
 export default function Sidebar() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
-  const [completedSlugs, setCompletedSlugs] = useState<Set<string>>(new Set());
   const [mobileOpen, setMobileOpen] = useState(false);
+  const completedSnapshot = useSyncExternalStore(
+    subscribeToProgress,
+    getCompletedChaptersSnapshot,
+    getServerCompletedChaptersSnapshot,
+  );
 
-  useEffect(() => {
-    const slugs = new Set<string>();
-    chapters.forEach((c) => {
-      if (isChapterCompleted(c.slug)) slugs.add(c.slug);
-    });
-    setCompletedSlugs(slugs);
-  }, [pathname]);
+  const completedSlugs = new Set(
+    completedSnapshot ? completedSnapshot.split("\n") : [],
+  );
 
   const completedCount = completedSlugs.size;
   const totalCount = chapters.length;
@@ -41,7 +46,7 @@ export default function Sidebar() {
       {/* Header */}
       <div className="p-5 border-b border-border">
         <Link href="/" className="block" onClick={() => setMobileOpen(false)}>
-          <h1 className="text-lg font-bold text-indigo-600">
+          <h1 className="text-lg font-bold text-primary">
             OpenHarness 学习
           </h1>
           <p className="text-xs text-gray-500 mt-0.5">
@@ -61,7 +66,6 @@ export default function Sidebar() {
             <button
               onClick={() => {
                 resetProgress();
-                setCompletedSlugs(new Set());
               }}
               className="text-xs text-muted-foreground hover:text-foreground transition-colors mt-1"
             >
@@ -78,7 +82,7 @@ export default function Sidebar() {
             <div className="px-2 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               {phase}. {label}
             </div>
-            {items.map((chapter, idx) => {
+            {items.map((chapter) => {
               const href = `/chapters/${chapter.slug}`;
               const isActive = pathname === href;
               const isCompleted = completedSlugs.has(chapter.slug);

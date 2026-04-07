@@ -32,12 +32,8 @@ function renderDiagram(name: string) {
 
 function SectionRenderer({
   section,
-  chapterSlug,
-  quizIndex,
 }: {
   section: ContentSection;
-  chapterSlug: string;
-  quizIndex: number;
 }) {
   switch (section.type) {
     case "text":
@@ -83,11 +79,7 @@ function SectionRenderer({
 
     case "quiz":
       return section.quiz ? (
-        <Quiz
-          chapterSlug={chapterSlug}
-          questionIndex={quizIndex}
-          quiz={section.quiz}
-        />
+        <Quiz quiz={section.quiz} />
       ) : null;
 
     case "key-concept":
@@ -117,8 +109,6 @@ export default function ChapterRenderer({ chapter }: { chapter: Chapter }) {
     markChapterCompleted(chapter.slug);
   }, [chapter.slug]);
 
-  let quizCounter = 0;
-
   return (
     <div className="max-w-3xl mx-auto px-6 py-10 lg:py-16">
       {/* Chapter header */}
@@ -134,13 +124,10 @@ export default function ChapterRenderer({ chapter }: { chapter: Chapter }) {
 
       {/* Sections */}
       {chapter.sections.map((section, i) => {
-        const qi = section.type === "quiz" ? quizCounter++ : 0;
         return (
           <SectionRenderer
             key={i}
             section={section}
-            chapterSlug={chapter.slug}
-            quizIndex={qi}
           />
         );
       })}

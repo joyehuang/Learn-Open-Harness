@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { chapters } from "@/content/chapters";
 import { PHASES } from "@/content/types";
-import { isChapterCompleted, getCompletedCount } from "@/lib/progress";
+import { isChapterCompleted, resetProgress } from "@/lib/progress";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -57,6 +57,17 @@ export default function Sidebar() {
             </span>
           </div>
           <Progress value={progressPct} className="h-1.5" />
+          {completedCount > 0 && (
+            <button
+              onClick={() => {
+                resetProgress();
+                setCompletedSlugs(new Set());
+              }}
+              className="text-xs text-muted-foreground hover:text-foreground transition-colors mt-1"
+            >
+              重置进度
+            </button>
+          )}
         </div>
       </div>
 

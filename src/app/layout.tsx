@@ -40,7 +40,7 @@ export const metadata: Metadata = {
       "Official Interactive Tutorial for OpenHarness – Zero to Hero in 12 Chapters.",
   },
   verification: {
-    google: "89bb8d3c80fa0fd7",
+    google: "Tzy_LFl2-r9MoAxQZ669oMKvUTdxceBsQhwPcKnoV5o",
   },
 };
 

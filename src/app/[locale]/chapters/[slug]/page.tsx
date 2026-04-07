@@ -22,9 +22,27 @@ export async function generateMetadata({
   const localeChapters = getChapters(locale as Locale);
   const chapter = localeChapters.find((c) => c.slug === slug);
   if (!chapter) return { title: dict.chapter.notFound };
+
+  const title = `${chapter.title} ${dict.chapter.metaSuffix}`;
+  const description = chapter.subtitle;
+  const canonicalUrl = `/${locale}/chapters/${slug}`;
+
   return {
-    title: `${chapter.title} ${dict.chapter.metaSuffix}`,
-    description: chapter.subtitle,
+    title,
+    description,
+    keywords: ["OpenHarness", "AI Agent", chapter.title, chapter.slug.replace(/-/g, " ")],
+    alternates: {
+      canonical: canonicalUrl,
+      languages: Object.fromEntries(
+        locales.map((l) => [l, `/${l}/chapters/${slug}`])
+      ),
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonicalUrl,
+      type: "article",
+    },
   };
 }
 

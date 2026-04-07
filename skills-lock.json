@@ -1,6 +1,11 @@
 {
   "version": 1,
   "skills": {
+    "seo-audit": {
+      "source": "coreyhaines31/marketingskills",
+      "sourceType": "github",
+      "computedHash": "1eef04180a5278a6869fab117c75fa2acf512bfda0a4b16569409b88b7bcb343"
+    },
     "shadcn": {
       "source": "shadcn/ui",
       "sourceType": "github",

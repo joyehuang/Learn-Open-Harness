@@ -1,10 +1,36 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getChapters } from "@/content/chapters";
 import { PHASES } from "@/content/types";
-import { isValidLocale } from "@/i18n/config";
+import { isValidLocale, locales } from "@/i18n/config";
 import type { Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/get-dictionary";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  if (!isValidLocale(locale)) return {};
+  const dict = await getDictionary(locale as Locale);
+  const { title, description } = dict.metadata;
+
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/${locale}`,
+      languages: Object.fromEntries(locales.map((l) => [l, `/${l}`])),
+    },
+    openGraph: {
+      title,
+      description,
+      url: `/${locale}`,
+    },
+  };
+}
 
 export default async function HomePage({
   params,

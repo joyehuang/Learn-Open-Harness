@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { locales, isValidLocale } from "@/i18n/config";
 import type { Locale } from "@/i18n/config";
@@ -9,6 +10,31 @@ import TopBar from "@/components/layout/TopBar";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  if (!isValidLocale(locale)) return {};
+  const dict = await getDictionary(locale as Locale);
+  const ogLocale = locale === "zh-CN" ? "zh_CN" : "en_US";
+
+  return {
+    alternates: {
+      languages: Object.fromEntries(
+        locales.map((l) => [l, `/${l}`])
+      ),
+    },
+    openGraph: {
+      locale: ogLocale,
+      alternateLocale: locales.filter((l) => l !== locale).map((l) =>
+        l === "zh-CN" ? "zh_CN" : "en_US"
+      ),
+    },
+  };
 }
 
 export default async function LocaleLayout({

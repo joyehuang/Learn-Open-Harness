@@ -44,12 +44,12 @@ function SectionRenderer({
       return (
         <div className="my-4">
           {section.title && (
-            <h2 className="text-xl font-bold text-gray-900 mb-3">
+            <h2 className="text-xl font-bold text-foreground mb-3">
               {section.title}
             </h2>
           )}
           {section.content && (
-            <div className="text-gray-700 leading-relaxed whitespace-pre-line">
+            <div className="text-muted-foreground leading-relaxed whitespace-pre-line">
               {section.content}
             </div>
           )}
@@ -67,13 +67,13 @@ function SectionRenderer({
       return section.code ? (
         <div className="my-4">
           {section.title && (
-            <h3 className="text-sm font-semibold text-gray-500 mb-2">
+            <h3 className="text-sm font-semibold text-muted-foreground mb-2">
               {section.title}
             </h3>
           )}
           <CodeBlock code={section.code} />
           {section.content && (
-            <p className="text-sm text-gray-500 mt-2">{section.content}</p>
+            <p className="text-sm text-muted-foreground mt-2">{section.content}</p>
           )}
         </div>
       ) : null;
@@ -123,13 +123,13 @@ export default function ChapterRenderer({ chapter }: { chapter: Chapter }) {
     <div className="max-w-3xl mx-auto px-6 py-10 lg:py-16">
       {/* Chapter header */}
       <div className="mb-8">
-        <div className="text-sm text-indigo-500 font-medium mb-2">
+        <div className="text-sm text-primary font-medium mb-2">
           第 {currentIdx + 1} 章
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <h1 className="text-3xl font-bold text-foreground mb-2">
           {chapter.title}
         </h1>
-        <p className="text-lg text-gray-500">{chapter.subtitle}</p>
+        <p className="text-lg text-muted-foreground">{chapter.subtitle}</p>
       </div>
 
       {/* Sections */}
@@ -146,11 +146,11 @@ export default function ChapterRenderer({ chapter }: { chapter: Chapter }) {
       })}
 
       {/* Navigation */}
-      <div className="flex items-center justify-between mt-12 pt-8 border-t border-gray-200">
+      <div className="flex items-center justify-between mt-12 pt-8 border-t border-border">
         {prevChapter ? (
           <Link
             href={`/chapters/${prevChapter.slug}`}
-            className="flex items-center gap-2 text-sm text-gray-500 hover:text-indigo-600 transition-colors"
+            className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -163,7 +163,7 @@ export default function ChapterRenderer({ chapter }: { chapter: Chapter }) {
         {nextChapter ? (
           <Link
             href={`/chapters/${nextChapter.slug}`}
-            className="flex items-center gap-2 text-sm font-medium text-indigo-600 hover:text-indigo-700 transition-colors"
+            className="flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
           >
             {nextChapter.title}
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -173,7 +173,7 @@ export default function ChapterRenderer({ chapter }: { chapter: Chapter }) {
         ) : (
           <Link
             href="/"
-            className="text-sm font-medium text-indigo-600 hover:text-indigo-700"
+            className="text-sm font-medium text-primary hover:text-primary/80"
           >
             返回首页 🎉
           </Link>

@@ -6,23 +6,19 @@ interface ComparisonTableProps {
   items: ComparisonItem[];
 }
 
-export default function ComparisonTable({
-  leftTitle,
-  rightTitle,
-  items,
-}: ComparisonTableProps) {
+export default function ComparisonTable({ leftTitle, rightTitle, items }: ComparisonTableProps) {
   return (
-    <div className="my-4 overflow-hidden rounded-xl border border-gray-200">
+    <div className="my-4 overflow-hidden rounded-xl border border-border">
       <table className="w-full text-sm">
         <thead>
-          <tr className="bg-gray-50">
-            <th className="px-4 py-3 text-left font-semibold text-gray-500 w-1/4">
+          <tr className="bg-muted">
+            <th className="px-4 py-3 text-left font-semibold text-muted-foreground w-1/4">
               对比项
             </th>
-            <th className="px-4 py-3 text-left font-semibold text-indigo-600">
+            <th className="px-4 py-3 text-left font-semibold text-primary">
               {leftTitle}
             </th>
-            <th className="px-4 py-3 text-left font-semibold text-emerald-600">
+            <th className="px-4 py-3 text-left font-semibold text-emerald-600 dark:text-emerald-400">
               {rightTitle}
             </th>
           </tr>
@@ -31,13 +27,13 @@ export default function ComparisonTable({
           {items.map((item, i) => (
             <tr
               key={i}
-              className={i % 2 === 0 ? "bg-white" : "bg-gray-50/50"}
+              className={i % 2 === 0 ? "bg-background" : "bg-muted/40"}
             >
-              <td className="px-4 py-3 font-medium text-gray-700">
+              <td className="px-4 py-3 font-medium text-foreground">
                 {item.label}
               </td>
-              <td className="px-4 py-3 text-gray-600">{item.left}</td>
-              <td className="px-4 py-3 text-gray-600">{item.right}</td>
+              <td className="px-4 py-3 text-muted-foreground">{item.left}</td>
+              <td className="px-4 py-3 text-muted-foreground">{item.right}</td>
             </tr>
           ))}
         </tbody>

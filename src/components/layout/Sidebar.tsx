@@ -3,12 +3,18 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import { chapters } from "@/content/chapters";
 import { PHASES } from "@/content/types";
 import { isChapterCompleted, getCompletedCount } from "@/lib/progress";
+import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Moon02Icon, Sun03Icon } from "@hugeicons/core-free-icons";
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const { theme, setTheme } = useTheme();
   const [completedSlugs, setCompletedSlugs] = useState<Set<string>>(new Set());
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -33,7 +39,7 @@ export default function Sidebar() {
   const sidebarContent = (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="p-5 border-b border-indigo-100">
+      <div className="p-5 border-b border-border">
         <Link href="/" className="block" onClick={() => setMobileOpen(false)}>
           <h1 className="text-lg font-bold text-indigo-600">
             OpenHarness 学习
@@ -44,26 +50,21 @@ export default function Sidebar() {
         </Link>
         {/* Progress bar */}
         <div className="mt-3">
-          <div className="flex justify-between text-xs text-gray-500 mb-1">
+          <div className="flex justify-between text-xs text-muted-foreground mb-1">
             <span>学习进度</span>
             <span>
               {completedCount}/{totalCount} ({progressPct}%)
             </span>
           </div>
-          <div className="h-1.5 bg-gray-200 rounded-full overflow-hidden">
-            <div
-              className="h-full bg-indigo-500 rounded-full transition-all duration-500"
-              style={{ width: `${progressPct}%` }}
-            />
-          </div>
+          <Progress value={progressPct} className="h-1.5" />
         </div>
       </div>
 
       {/* Chapter list */}
-      <nav className="flex-1 overflow-y-auto p-3">
+      <nav className="flex-1 overflow-y-auto p-3 min-h-0">
         {grouped.map(({ phase, label, items }) => (
           <div key={phase} className="mb-4">
-            <div className="px-2 py-1 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+            <div className="px-2 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               {phase}. {label}
             </div>
             {items.map((chapter, idx) => {
@@ -80,17 +81,17 @@ export default function Sidebar() {
                   onClick={() => setMobileOpen(false)}
                   className={`flex items-center gap-2.5 px-2 py-2 rounded-lg text-sm transition-colors mb-0.5 ${
                     isActive
-                      ? "bg-indigo-50 text-indigo-700 font-medium"
-                      : "text-gray-600 hover:bg-gray-100"
+                      ? "bg-primary/10 text-primary font-medium"
+                      : "text-muted-foreground hover:bg-muted hover:text-foreground"
                   }`}
                 >
                   <span
-                    className={`w-5 h-5 rounded-full flex items-center justify-center text-xs flex-shrink-0 ${
+                    className={`size-5 rounded-full flex items-center justify-center text-xs flex-shrink-0 ${
                       isCompleted
                         ? "bg-emerald-500 text-white"
                         : isActive
-                          ? "bg-indigo-500 text-white"
-                          : "bg-gray-200 text-gray-500"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted text-muted-foreground"
                     }`}
                   >
                     {isCompleted ? "✓" : chapterNum}
@@ -102,6 +103,23 @@ export default function Sidebar() {
           </div>
         ))}
       </nav>
+
+      {/* Footer: dark mode toggle */}
+      <div className="p-3 border-t border-border">
+        <Button
+          variant="ghost"
+          size="sm"
+          className="w-full justify-start gap-2 text-muted-foreground"
+          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        >
+          <HugeiconsIcon
+            icon={theme === "dark" ? Sun03Icon : Moon02Icon}
+            className="size-4"
+            strokeWidth={1.5}
+          />
+          {theme === "dark" ? "浅色模式" : "深色模式"}
+        </Button>
+      </div>
     </div>
   );
 
@@ -110,7 +128,7 @@ export default function Sidebar() {
       {/* Mobile hamburger */}
       <button
         onClick={() => setMobileOpen(!mobileOpen)}
-        className="fixed top-3 left-3 z-50 lg:hidden bg-white shadow-md rounded-lg p-2"
+        className="fixed top-3 left-3 z-50 lg:hidden bg-background shadow-md rounded-lg p-2 border border-border"
         aria-label="Toggle menu"
       >
         <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -132,7 +150,7 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-72 bg-white border-r border-gray-200 z-40 transform transition-transform duration-200 ${
+        className={`fixed top-0 left-0 h-full w-72 bg-background border-r border-border z-40 transform transition-transform duration-200 ${
           mobileOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0 lg:static lg:z-auto`}
       >

@@ -91,10 +91,6 @@ npm run dev
 
 打开 [http://localhost:3000](http://localhost:3000) 即可开始学习。
 
-### 一键部署
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/joyehuang/Learn-Open-Harness)
-
 ## 🛠 技术栈
 
 | 技术 | 用途 |

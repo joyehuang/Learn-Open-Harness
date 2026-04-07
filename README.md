@@ -14,6 +14,10 @@
 
 [**Live Demo →**](https://learn-openharness.vercel.app) &nbsp;·&nbsp; [Issues](https://github.com/joyehuang/Learn-Open-Harness/issues) &nbsp;·&nbsp; [Contributing](#contributing) &nbsp;·&nbsp; [中文版](./README.zh-CN.md)
 
+---
+
+**Author**: [joyehuang.me](https://joyehuang.me) &nbsp;·&nbsp; [Xiaohongshu (32k likes) →](https://xhslink.com/m/AesdUI88Jar)
+
 </div>
 
 > **If this zero-to-hero tutorial helps you understand AI Agents, give us a ⭐ — Goal: 10k stars!**
@@ -81,10 +85,6 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) and start learning.
-
-### One-Click Deploy
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/joyehuang/Learn-Open-Harness)
 
 ## Tech Stack
 

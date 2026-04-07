@@ -11,7 +11,7 @@ const notoSansSC = Noto_Sans_SC({subsets:['latin'],weight:['400','500','600','70
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://learn.openharness.dev");
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "https://learn-open-harness.vercel.app");
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

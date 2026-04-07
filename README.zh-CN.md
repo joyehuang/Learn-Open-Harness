@@ -16,7 +16,7 @@
 
 ---
 
-<video src="https://ryzb8hnodzvfwtos.public.blob.vercel-storage.com/demo.mp4" width="100%" autoplay loop muted playsinline></video>
+https://github.com/user-attachments/assets/a0fe6e34-71b6-400b-9a96-e5203d8c9a5c
 
 ## 为什么做这个？
 

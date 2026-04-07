@@ -16,7 +16,7 @@ Zero to Hero in 12 chapters. Learn the architecture behind Claude Code: Agent Lo
 
 ---
 
-<video src="https://ryzb8hnodzvfwtos.public.blob.vercel-storage.com/demo_en.mp4" width="100%" autoplay loop muted playsinline></video>
+https://github.com/user-attachments/assets/72102803-c56d-4b37-816f-f530a7ce9dc2
 
 ## Why this exists
 

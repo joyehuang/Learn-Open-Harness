@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
-import { chapters } from "@/content/chapters";
+import type { Chapter } from "@/content/types";
 import { PHASES } from "@/content/types";
 import { isChapterCompleted, resetProgress } from "@/lib/progress";
 import { Progress } from "@/components/ui/progress";
@@ -23,9 +23,11 @@ const localeLabels: Record<Locale, string> = {
 export default function Sidebar({
   locale,
   dict,
+  chapters,
 }: {
   locale: Locale;
   dict: Dictionary;
+  chapters: Chapter[];
 }) {
   const pathname = usePathname();
   const router = useRouter();

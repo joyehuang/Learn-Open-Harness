@@ -3,7 +3,6 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import type { Chapter, ContentSection } from "@/content/types";
-import { chapters } from "@/content/chapters";
 import { markChapterCompleted } from "@/lib/progress";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/types";
@@ -113,10 +112,12 @@ function SectionRenderer({
 
 export default function ChapterRenderer({
   chapter,
+  chapters,
   locale,
   dict,
 }: {
   chapter: Chapter;
+  chapters: Chapter[];
   locale: Locale;
   dict: Dictionary;
 }) {

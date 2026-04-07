@@ -14,6 +14,10 @@
 
 [**在线体验 →**](https://learn-openharness.vercel.app) &nbsp;·&nbsp; [提 Issue](https://github.com/joyehuang/Learn-Open-Harness/issues) &nbsp;·&nbsp; [贡献内容](#贡献)
 
+---
+
+**作者**：[joyehuang.me](https://joyehuang.me) &nbsp;·&nbsp; [小红书（3.2万赞藏）→ 来看看我的主页](https://xhslink.com/m/AesdUI88Jar)
+
 </div>
 
 ---
@@ -124,4 +128,9 @@ MIT License — 自由使用、修改、分发。
 
 <div align="center">
   <sub>如果这个项目对你有帮助，欢迎点个 ⭐ Star，让更多人发现它</sub>
+  <br><br>
+  <sub>
+    作者：<a href="https://joyehuang.me">joyehuang.me</a> &nbsp;·&nbsp;
+    我在小红书收获了 3.2 万次赞与收藏，<a href="https://xhslink.com/m/AesdUI88Jar">来看看我的主页 →</a>
+  </sub>
 </div>

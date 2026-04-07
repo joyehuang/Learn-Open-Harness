@@ -10,14 +10,14 @@ function getProgress(): Progress {
     return { completedChapters: [], quizAnswers: {} };
   }
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = sessionStorage.getItem(STORAGE_KEY);
     if (raw) return JSON.parse(raw);
   } catch {}
   return { completedChapters: [], quizAnswers: {} };
 }
 
 function saveProgress(p: Progress) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(p));
+  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(p));
 }
 
 export function isChapterCompleted(slug: string): boolean {

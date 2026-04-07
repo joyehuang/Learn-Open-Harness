@@ -14,16 +14,20 @@ export default function HomePage() {
       {/* Hero */}
       <div className="text-center mb-16">
         <div className="inline-flex items-center gap-2 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
-          面向零基础学习者
+          Zero to Hero · 12 Chapters
         </div>
         <h1 className="text-4xl lg:text-5xl font-bold text-gray-900 dark:text-gray-50 mb-4">
           学习 <span className="text-indigo-600 dark:text-indigo-400">OpenHarness</span>
         </h1>
+        <p className="text-sm text-gray-500 dark:text-gray-400 font-medium mb-4">
+          Official Interactive Tutorial for OpenHarness
+        </p>
         <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
-          AI Agent 正在改变软件开发的方式。OpenHarness
-          是让大语言模型从&ldquo;只会说话&rdquo;变成&ldquo;能做事&rdquo;的关键基础设施。
+          像理解 Claude Code 一样学习 AI Agent 基础设施。
           <br />
-          这门课程将用通俗易懂的方式，带你从零理解它的每一个核心概念。
+          Agent Loop、工具系统、Memory、多 Agent 协作……
+          <br />
+          12 章从零到精通，不需要任何 AI 或编程基础。
         </p>
         <Link
           href={`/chapters/${chapters[0].slug}`}

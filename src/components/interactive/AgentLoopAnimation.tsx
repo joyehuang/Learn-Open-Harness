@@ -1,107 +1,70 @@
 "use client";
 
 import { useState } from "react";
+import type { Dictionary } from "@/i18n/types";
 
-const steps = [
-  {
-    id: 1,
-    label: "用户发送消息",
-    icon: "💬",
-    description: "用户输入一个请求，比如「帮我读取 config.json 文件」",
-    highlight: "user",
-  },
-  {
-    id: 2,
-    label: "LLM 思考",
-    icon: "🧠",
-    description:
-      "大语言模型分析请求，决定需要使用 Read 工具来读取文件",
-    highlight: "llm",
-  },
-  {
-    id: 3,
-    label: "生成工具调用",
-    icon: "🔧",
-    description:
-      '模型生成结构化的工具调用请求：Read(file_path="config.json")',
-    highlight: "tool-call",
-  },
-  {
-    id: 4,
-    label: "权限检查",
-    icon: "🛡️",
-    description:
-      "Harness 检查当前权限模式，读取操作在默认模式下自动通过",
-    highlight: "permission",
-  },
-  {
-    id: 5,
-    label: "执行工具",
-    icon: "⚡",
-    description: "Read 工具被执行，读取文件内容，返回结果",
-    highlight: "execute",
-  },
-  {
-    id: 6,
-    label: "结果返回",
-    icon: "📋",
-    description:
-      "工具结果被放入消息中，反馈给 LLM。LLM 根据文件内容生成最终回复",
-    highlight: "result",
-  },
+const icons = ["💬", "🧠", "🔧", "🛡️", "⚡", "📋"];
+const highlights = ["user", "llm", "tool-call", "permission", "execute", "result"];
+
+const boxColors = [
+  "bg-blue-100 border-blue-300 text-blue-700",
+  "bg-slate-100 border-slate-300 text-slate-700",
+  "bg-sky-100 border-sky-300 text-sky-700",
+  "bg-red-100 border-red-300 text-red-700",
+  "bg-emerald-100 border-emerald-300 text-emerald-700",
+  "bg-amber-100 border-amber-300 text-amber-700",
 ];
 
 const boxPositions = [
-  { id: "user", label: "用户", x: 50, y: 20, color: "bg-blue-100 border-blue-300 text-blue-700" },
-  { id: "llm", label: "LLM", x: 200, y: 20, color: "bg-slate-100 border-slate-300 text-slate-700" },
-  { id: "tool-call", label: "工具调用", x: 350, y: 20, color: "bg-sky-100 border-sky-300 text-sky-700" },
-  { id: "permission", label: "权限检查", x: 350, y: 100, color: "bg-red-100 border-red-300 text-red-700" },
-  { id: "execute", label: "执行工具", x: 200, y: 100, color: "bg-emerald-100 border-emerald-300 text-emerald-700" },
-  { id: "result", label: "返回结果", x: 50, y: 100, color: "bg-amber-100 border-amber-300 text-amber-700" },
+  { x: 50, y: 20 },
+  { x: 200, y: 20 },
+  { x: 350, y: 20 },
+  { x: 350, y: 100 },
+  { x: 200, y: 100 },
+  { x: 50, y: 100 },
 ];
 
-export default function AgentLoopAnimation() {
+export default function AgentLoopAnimation({
+  dict,
+}: {
+  dict: Dictionary["agentLoop"];
+}) {
   const [currentStep, setCurrentStep] = useState(0);
 
-  const step = steps[currentStep];
+  const step = dict.steps[currentStep];
 
   return (
     <div className="my-6 bg-card rounded-xl border border-border p-5">
       <div className="text-xs font-semibold text-primary mb-4">
-        🔄 Agent Loop 动画演示
+        {dict.title}
       </div>
 
       {/* Flow diagram */}
       <div className="relative h-48 mb-4">
-        {boxPositions.map((box) => {
-          const isActive = step.highlight === box.id;
+        {dict.boxes.map((label, i) => {
+          const isActive = highlights[currentStep] === highlights[i];
+          const pos = boxPositions[i];
           return (
             <div
-              key={box.id}
+              key={i}
               className={`absolute px-4 py-2 rounded-lg border-2 text-sm font-medium transition-all duration-300 ${
                 isActive
-                  ? `${box.color} scale-110 shadow-lg`
+                  ? `${boxColors[i]} scale-110 shadow-lg`
                   : "bg-muted border-border text-muted-foreground"
               }`}
-              style={{ left: box.x, top: box.y }}
+              style={{ left: pos.x, top: pos.y }}
             >
-              {box.label}
+              {label}
             </div>
           );
         })}
         {/* Arrows */}
         <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 480 160">
-          {/* User -> LLM */}
           <path d="M 130 35 L 195 35" stroke="#d1d5db" strokeWidth="2" markerEnd="url(#arrow)" />
-          {/* LLM -> Tool Call */}
           <path d="M 270 35 L 345 35" stroke="#d1d5db" strokeWidth="2" markerEnd="url(#arrow)" />
-          {/* Tool Call -> Permission */}
           <path d="M 385 55 L 385 95" stroke="#d1d5db" strokeWidth="2" markerEnd="url(#arrow)" />
-          {/* Permission -> Execute */}
           <path d="M 345 115 L 280 115" stroke="#d1d5db" strokeWidth="2" markerEnd="url(#arrow)" />
-          {/* Execute -> Result */}
           <path d="M 195 115 L 140 115" stroke="#d1d5db" strokeWidth="2" markerEnd="url(#arrow)" />
-          {/* Result -> LLM (loop back) */}
           <path d="M 85 95 L 85 65 L 195 65 L 220 55" stroke="#d1d5db" strokeWidth="2" strokeDasharray="4,4" markerEnd="url(#arrow)" />
           <defs>
             <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
@@ -114,9 +77,9 @@ export default function AgentLoopAnimation() {
       {/* Current step info */}
       <div className="bg-muted rounded-lg p-4 mb-4">
         <div className="flex items-center gap-2 mb-1">
-          <span className="text-xl">{step.icon}</span>
+          <span className="text-xl">{icons[currentStep]}</span>
           <span className="font-semibold text-foreground">
-            第 {step.id} 步：{step.label}
+            {dict.stepPrefix} {currentStep + 1} {dict.stepSuffix}：{step.label}
           </span>
         </div>
         <p className="text-sm text-muted-foreground ml-8">{step.description}</p>
@@ -129,10 +92,10 @@ export default function AgentLoopAnimation() {
           disabled={currentStep === 0}
           className="px-4 py-2 text-sm rounded-lg border border-border text-muted-foreground hover:bg-muted disabled:opacity-30 disabled:cursor-not-allowed"
         >
-          ← 上一步
+          {dict.prev}
         </button>
         <div className="flex gap-1.5">
-          {steps.map((_, i) => (
+          {dict.steps.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrentStep(i)}
@@ -144,12 +107,12 @@ export default function AgentLoopAnimation() {
         </div>
         <button
           onClick={() =>
-            setCurrentStep(Math.min(steps.length - 1, currentStep + 1))
+            setCurrentStep(Math.min(dict.steps.length - 1, currentStep + 1))
           }
-          disabled={currentStep === steps.length - 1}
+          disabled={currentStep === dict.steps.length - 1}
           className="px-4 py-2 text-sm rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-30 disabled:cursor-not-allowed"
         >
-          下一步 →
+          {dict.next}
         </button>
       </div>
     </div>

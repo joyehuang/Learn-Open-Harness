@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import type { QuizQuestion } from "@/content/types";
+import type { Dictionary } from "@/i18n/types";
 
 interface QuizProps {
   quiz: QuizQuestion;
+  dict: Dictionary["quiz"];
 }
 
-export default function Quiz({ quiz }: QuizProps) {
+export default function Quiz({ quiz, dict }: QuizProps) {
   const [selected, setSelected] = useState<number | null>(null);
   const [revealed, setRevealed] = useState(false);
 
@@ -28,14 +30,14 @@ export default function Quiz({ quiz }: QuizProps) {
     <div className="my-6 bg-card rounded-xl border border-border p-5">
       <div className="flex items-center justify-between mb-2">
         <div className="text-xs font-semibold text-primary">
-          🧠 检验理解
+          {dict.title}
         </div>
         {revealed && (
           <button
             onClick={handleReset}
             className="text-xs text-muted-foreground hover:text-foreground transition-colors"
           >
-            重新作答
+            {dict.retry}
           </button>
         )}
       </div>
@@ -72,7 +74,7 @@ export default function Quiz({ quiz }: QuizProps) {
           className={`mt-4 p-3 rounded-lg text-sm ${isCorrect ? "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300" : "bg-amber-500/10 text-amber-700 dark:text-amber-300"}`}
         >
           <span className="font-semibold">
-            {isCorrect ? "✅ 正确！" : "❌ 不太对。"}
+            {isCorrect ? dict.correct : dict.incorrect}
           </span>{" "}
           {quiz.explanation}
         </div>

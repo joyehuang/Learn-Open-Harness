@@ -3,8 +3,9 @@
 import { useEffect } from "react";
 import Link from "next/link";
 import type { Chapter, ContentSection } from "@/content/types";
-import { chapters } from "@/content/chapters";
 import { markChapterCompleted } from "@/lib/progress";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/types";
 import CodeBlock from "./CodeBlock";
 import KeyConceptCard from "./KeyConceptCard";
 import ComparisonTable from "./ComparisonTable";
@@ -15,25 +16,14 @@ import ToolExplorer from "@/components/interactive/ToolExplorer";
 import PermissionSimulator from "@/components/interactive/PermissionSimulator";
 import ArchitectureDiagram from "@/components/interactive/ArchitectureDiagram";
 
-function renderDiagram(name: string) {
-  switch (name) {
-    case "AgentLoopAnimation":
-      return <AgentLoopAnimation />;
-    case "ToolExplorer":
-      return <ToolExplorer />;
-    case "PermissionSimulator":
-      return <PermissionSimulator />;
-    case "ArchitectureDiagram":
-      return <ArchitectureDiagram />;
-    default:
-      return null;
-  }
-}
-
 function SectionRenderer({
   section,
+  locale,
+  dict,
 }: {
   section: ContentSection;
+  locale: Locale;
+  dict: Dictionary;
 }) {
   switch (section.type) {
     case "text":
@@ -54,7 +44,7 @@ function SectionRenderer({
 
     case "analogy":
       return (
-        <Callout type="analogy" title={section.title || "生活类比"}>
+        <Callout type="analogy" title={section.title || dict.chapter.analogyDefault}>
           {section.content}
         </Callout>
       );
@@ -75,23 +65,38 @@ function SectionRenderer({
       ) : null;
 
     case "diagram":
-      return section.diagram ? renderDiagram(section.diagram) : null;
+      if (!section.diagram) return null;
+      switch (section.diagram) {
+        case "AgentLoopAnimation":
+          return <AgentLoopAnimation dict={dict.agentLoop} />;
+        case "ToolExplorer":
+          return <ToolExplorer dict={dict.toolExplorer} />;
+        case "PermissionSimulator":
+          return <PermissionSimulator dict={dict.permissionSim} />;
+        case "ArchitectureDiagram":
+          return <ArchitectureDiagram locale={locale} dict={dict.architecture} />;
+        default:
+          return null;
+      }
 
     case "quiz":
       return section.quiz ? (
-        <Quiz quiz={section.quiz} />
+        <Quiz
+          quiz={section.quiz}
+          dict={dict.quiz}
+        />
       ) : null;
 
     case "key-concept":
       return (
-        <KeyConceptCard title={section.title || ""}>
+        <KeyConceptCard title={section.title || ""} label={dict.chapter.keyConcept}>
           {section.content}
         </KeyConceptCard>
       );
 
     case "comparison":
       return section.comparison ? (
-        <ComparisonTable {...section.comparison} />
+        <ComparisonTable {...section.comparison} label={dict.chapter.comparisonLabel} />
       ) : null;
 
     default:
@@ -99,7 +104,17 @@ function SectionRenderer({
   }
 }
 
-export default function ChapterRenderer({ chapter }: { chapter: Chapter }) {
+export default function ChapterRenderer({
+  chapter,
+  chapters,
+  locale,
+  dict,
+}: {
+  chapter: Chapter;
+  chapters: Chapter[];
+  locale: Locale;
+  dict: Dictionary;
+}) {
   const currentIdx = chapters.findIndex((c) => c.slug === chapter.slug);
   const prevChapter = currentIdx > 0 ? chapters[currentIdx - 1] : null;
   const nextChapter =
@@ -114,7 +129,7 @@ export default function ChapterRenderer({ chapter }: { chapter: Chapter }) {
       {/* Chapter header */}
       <div className="mb-8">
         <div className="text-sm text-primary font-medium mb-2">
-          第 {currentIdx + 1} 章
+          {dict.chapter.prefix} {currentIdx + 1} {dict.chapter.suffix}
         </div>
         <h1 className="text-3xl font-bold text-foreground mb-2">
           {chapter.title}
@@ -128,6 +143,8 @@ export default function ChapterRenderer({ chapter }: { chapter: Chapter }) {
           <SectionRenderer
             key={i}
             section={section}
+            locale={locale}
+            dict={dict}
           />
         );
       })}
@@ -136,7 +153,7 @@ export default function ChapterRenderer({ chapter }: { chapter: Chapter }) {
       <div className="flex items-center justify-between mt-12 pt-8 border-t border-border">
         {prevChapter ? (
           <Link
-            href={`/chapters/${prevChapter.slug}`}
+            href={`/${locale}/chapters/${prevChapter.slug}`}
             className="flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -149,7 +166,7 @@ export default function ChapterRenderer({ chapter }: { chapter: Chapter }) {
         )}
         {nextChapter ? (
           <Link
-            href={`/chapters/${nextChapter.slug}`}
+            href={`/${locale}/chapters/${nextChapter.slug}`}
             className="flex items-center gap-2 text-sm font-medium text-primary hover:text-primary/80 transition-colors"
           >
             {nextChapter.title}
@@ -159,10 +176,10 @@ export default function ChapterRenderer({ chapter }: { chapter: Chapter }) {
           </Link>
         ) : (
           <Link
-            href="/"
+            href={`/${locale}`}
             className="text-sm font-medium text-primary hover:text-primary/80"
           >
-            返回首页 🎉
+            {dict.chapter.backHome}
           </Link>
         )}
       </div>

@@ -1,5 +1,4 @@
-import type { Chapter } from "./types";
-import type { Locale } from "@/i18n/config";
+import type { Chapter } from "../types";
 import chapter01 from "./chapter-01";
 import chapter02 from "./chapter-02";
 import chapter03 from "./chapter-03";
@@ -12,9 +11,8 @@ import chapter09 from "./chapter-09";
 import chapter10 from "./chapter-10";
 import chapter11 from "./chapter-11";
 import chapter12 from "./chapter-12";
-import { chapters as enChapters } from "./en/chapters";
 
-const zhChapters: Chapter[] = [
+export const chapters: Chapter[] = [
   chapter01,
   chapter02,
   chapter03,
@@ -28,15 +26,3 @@ const zhChapters: Chapter[] = [
   chapter11,
   chapter12,
 ];
-
-const chaptersByLocale: Record<Locale, Chapter[]> = {
-  "zh-CN": zhChapters,
-  en: enChapters,
-};
-
-export function getChapters(locale: Locale): Chapter[] {
-  return chaptersByLocale[locale] || zhChapters;
-}
-
-// Keep backward compat: default export for components that just need slugs
-export const chapters = zhChapters;

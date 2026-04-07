@@ -9,7 +9,7 @@ interface CodeBlockProps {
 
 export default function CodeBlock({ code }: CodeBlockProps) {
   return (
-    <div className="my-4 rounded-xl overflow-hidden border border-gray-200">
+    <div className="my-4 rounded-xl overflow-hidden border border-border">
       {code.filename && (
         <div className="bg-gray-800 px-4 py-2 text-xs text-gray-400 font-mono border-b border-gray-700">
           {code.filename}
@@ -31,7 +31,7 @@ export default function CodeBlock({ code }: CodeBlockProps) {
                 <div
                   key={i}
                   {...getLineProps({ line })}
-                  className={`${isHighlighted ? "bg-indigo-500/20 -mx-4 px-4 border-l-2 border-indigo-400" : ""}`}
+                  className={`${isHighlighted ? "bg-primary/15 -mx-4 px-4 border-l-2 border-primary/60" : ""}`}
                 >
                   <span className="inline-block w-8 text-right mr-4 text-gray-500 select-none text-xs">
                     {i + 1}

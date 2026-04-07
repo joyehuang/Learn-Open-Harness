@@ -25,18 +25,24 @@ const actions: ActionExample[] = [
   { name: "启动子 Agent", icon: "🤖", isRead: false, isWrite: true, isDangerous: false },
 ];
 
+const statusStyles = {
+  allowed: "text-emerald-600 bg-emerald-50 dark:text-emerald-300 dark:bg-emerald-500/10",
+  blocked: "text-red-600 bg-red-50 dark:text-red-300 dark:bg-red-500/10",
+  confirmation: "text-amber-600 bg-amber-50 dark:text-amber-300 dark:bg-amber-500/10",
+};
+
 function getStatus(action: ActionExample, mode: PermissionMode) {
   if (mode === "full-auto") {
-    return { label: "自动通过", color: "text-emerald-600 bg-emerald-50" };
+    return { label: "自动通过", color: statusStyles.allowed };
   }
   if (mode === "plan") {
-    if (action.isRead) return { label: "允许", color: "text-emerald-600 bg-emerald-50" };
-    return { label: "阻止", color: "text-red-600 bg-red-50" };
+    if (action.isRead) return { label: "允许", color: statusStyles.allowed };
+    return { label: "阻止", color: statusStyles.blocked };
   }
   // default
-  if (action.isRead) return { label: "自动通过", color: "text-emerald-600 bg-emerald-50" };
-  if (action.isDangerous) return { label: "需要确认 ⚠️", color: "text-amber-600 bg-amber-50" };
-  return { label: "需要确认", color: "text-amber-600 bg-amber-50" };
+  if (action.isRead) return { label: "自动通过", color: statusStyles.allowed };
+  if (action.isDangerous) return { label: "需要确认 ⚠️", color: statusStyles.confirmation };
+  return { label: "需要确认", color: statusStyles.confirmation };
 }
 
 const modeDescriptions: Record<PermissionMode, string> = {
@@ -49,8 +55,8 @@ export default function PermissionSimulator() {
   const [mode, setMode] = useState<PermissionMode>("default");
 
   return (
-    <div className="my-6 bg-white rounded-xl border border-gray-200 p-5">
-      <div className="text-xs font-semibold text-indigo-500 mb-3">
+    <div className="my-6 bg-card rounded-xl border border-border p-5">
+      <div className="text-xs font-semibold text-primary mb-3">
         🛡️ 权限模拟器 — 试试切换不同模式
       </div>
 
@@ -62,8 +68,8 @@ export default function PermissionSimulator() {
             onClick={() => setMode(m)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               mode === m
-                ? "bg-indigo-600 text-white shadow-md"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                ? "bg-primary text-primary-foreground shadow-md dark:shadow-none"
+                : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
             }`}
           >
             {m === "default" ? "默认" : m === "plan" ? "规划" : "全自动"}
@@ -71,7 +77,7 @@ export default function PermissionSimulator() {
         ))}
       </div>
 
-      <p className="text-sm text-gray-500 mb-4">{modeDescriptions[mode]}</p>
+      <p className="text-sm text-muted-foreground mb-4">{modeDescriptions[mode]}</p>
 
       {/* Actions */}
       <div className="space-y-1.5">
@@ -80,11 +86,11 @@ export default function PermissionSimulator() {
           return (
             <div
               key={action.name}
-              className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+              className="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-muted/50 transition-colors"
             >
               <div className="flex items-center gap-2 text-sm">
                 <span>{action.icon}</span>
-                <span className="text-gray-700">{action.name}</span>
+                <span className="text-foreground">{action.name}</span>
               </div>
               <span
                 className={`px-2.5 py-1 rounded-full text-xs font-medium ${status.color}`}

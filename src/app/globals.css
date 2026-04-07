@@ -104,37 +104,41 @@ body {
 }
 
 .dark {
-  --background: oklch(0.148 0.022 265);
-  --foreground: oklch(0.94 0.006 250);
-  --card: oklch(0.195 0.02 265);
-  --card-foreground: oklch(0.94 0.006 250);
-  --popover: oklch(0.195 0.02 265);
-  --popover-foreground: oklch(0.94 0.006 250);
-  --primary: oklch(0.675 0.19 264);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.235 0.018 265);
-  --secondary-foreground: oklch(0.94 0.006 250);
-  --muted: oklch(0.215 0.018 265);
-  --muted-foreground: oklch(0.60 0.014 265);
-  --accent: oklch(0.235 0.018 265);
-  --accent-foreground: oklch(0.94 0.006 250);
+  --background: oklch(0 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.12 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.12 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0 0 0);
+  --secondary: oklch(0.18 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.18 0 0);
+  --muted-foreground: oklch(0.68 0 0);
+  --accent: oklch(0.18 0 0);
+  --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.65 0.22 22);
-  --border: oklch(0.275 0.016 265);
-  --input: oklch(0.275 0.016 265);
-  --ring: oklch(0.675 0.19 264);
-  --chart-1: oklch(0.685 0.19 264);
-  --chart-2: oklch(0.62 0.18 290);
-  --chart-3: oklch(0.70 0.17 175);
-  --chart-4: oklch(0.72 0.18 55);
-  --chart-5: oklch(0.68 0.2 22);
-  --sidebar: oklch(0.165 0.024 265);
-  --sidebar-foreground: oklch(0.94 0.006 250);
-  --sidebar-primary: oklch(0.675 0.19 264);
-  --sidebar-primary-foreground: oklch(1 0 0);
-  --sidebar-accent: oklch(0.215 0.018 265);
-  --sidebar-accent-foreground: oklch(0.94 0.006 250);
-  --sidebar-border: oklch(0.245 0.016 265);
-  --sidebar-ring: oklch(0.675 0.19 264);
+  --border: oklch(0.24 0 0);
+  --input: oklch(0.24 0 0);
+  --ring: oklch(0.75 0 0);
+  --chart-1: oklch(0.88 0 0);
+  --chart-2: oklch(0.76 0 0);
+  --chart-3: oklch(0.64 0 0);
+  --chart-4: oklch(0.52 0 0);
+  --chart-5: oklch(0.40 0 0);
+  --sidebar: oklch(0.08 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.985 0 0);
+  --sidebar-primary-foreground: oklch(0 0 0);
+  --sidebar-accent: oklch(0.16 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.22 0 0);
+  --sidebar-ring: oklch(0.75 0 0);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: oklch(0.32 0 0);
 }
 
 @layer base {

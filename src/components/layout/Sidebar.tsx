@@ -41,7 +41,7 @@ export default function Sidebar() {
       {/* Header */}
       <div className="p-5 border-b border-border">
         <Link href="/" className="block" onClick={() => setMobileOpen(false)}>
-          <h1 className="text-lg font-bold text-indigo-600">
+          <h1 className="text-lg font-bold text-indigo-600 dark:text-white">
             OpenHarness 学习
           </h1>
           <p className="text-xs text-gray-500 mt-0.5">

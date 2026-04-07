@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
-import Sidebar from "@/components/layout/Sidebar";
-import { Providers } from "@/components/providers";
 import { Geist, JetBrains_Mono, Noto_Sans_SC } from "next/font/google";
 import { cn } from "@/lib/utils";
 
@@ -27,12 +25,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" suppressHydrationWarning className={cn("h-full", "font-sans", geist.variable, jetbrainsMonoHeading.variable, notoSansSC.variable)}>
+    <html suppressHydrationWarning className={cn("h-full", "font-sans", geist.variable, jetbrainsMonoHeading.variable, notoSansSC.variable)}>
       <body className="h-full flex">
-        <Providers>
-          <Sidebar />
-          <main className="flex-1 overflow-y-auto">{children}</main>
-        </Providers>
+        {children}
         <Analytics />
       </body>
     </html>

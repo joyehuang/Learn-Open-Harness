@@ -4,16 +4,17 @@ interface ComparisonTableProps {
   leftTitle: string;
   rightTitle: string;
   items: ComparisonItem[];
+  label?: string;
 }
 
-export default function ComparisonTable({ leftTitle, rightTitle, items }: ComparisonTableProps) {
+export default function ComparisonTable({ leftTitle, rightTitle, items, label }: ComparisonTableProps) {
   return (
     <div className="my-4 overflow-hidden rounded-xl border border-border">
       <table className="w-full text-sm">
         <thead>
           <tr className="bg-muted">
             <th className="px-4 py-3 text-left font-semibold text-muted-foreground w-1/4">
-              对比项
+              {label || "Comparison"}
             </th>
             <th className="px-4 py-3 text-left font-semibold text-primary">
               {leftTitle}

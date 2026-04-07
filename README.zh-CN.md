@@ -16,7 +16,7 @@
 
 ---
 
-<!-- TODO: demo GIF here -->
+<video src="https://ryzb8hnodzvfwtos.public.blob.vercel-storage.com/demo.mp4" width="100%" autoplay loop muted playsinline></video>
 
 ## 为什么做这个？
 

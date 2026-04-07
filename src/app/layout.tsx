@@ -39,6 +39,9 @@ export const metadata: Metadata = {
     description:
       "Official Interactive Tutorial for OpenHarness – Zero to Hero in 12 Chapters.",
   },
+  verification: {
+    google: "89bb8d3c80fa0fd7",
+  },
 };
 
 export default function RootLayout({

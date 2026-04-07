@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { chapters } from "@/content/chapters";
@@ -11,9 +11,24 @@ import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { Moon02Icon, Sun03Icon } from "@hugeicons/core-free-icons";
+import type { Locale } from "@/i18n/config";
+import { locales } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/types";
 
-export default function Sidebar() {
+const localeLabels: Record<Locale, string> = {
+  "zh-CN": "中文",
+  en: "EN",
+};
+
+export default function Sidebar({
+  locale,
+  dict,
+}: {
+  locale: Locale;
+  dict: Dictionary;
+}) {
   const pathname = usePathname();
+  const router = useRouter();
   const { theme, setTheme } = useTheme();
   const [completedSlugs, setCompletedSlugs] = useState<Set<string>>(new Set());
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -30,44 +45,41 @@ export default function Sidebar() {
   const totalCount = chapters.length;
   const progressPct = Math.round((completedCount / totalCount) * 100);
 
-  const grouped = Object.entries(PHASES).map(([key, { label }]) => ({
+  const grouped = Object.entries(PHASES).map(([key, { color }]) => ({
     phase: key,
-    label,
+    label: dict.phases[key] || key,
     items: chapters.filter((c) => c.phase === key),
   }));
+
+  function switchLocale(newLocale: Locale) {
+    // Set cookie for proxy to remember
+    document.cookie = `locale=${newLocale};path=/;max-age=${60 * 60 * 24 * 365}`;
+    // Replace locale in current path
+    const newPath = pathname.replace(`/${locale}`, `/${newLocale}`);
+    router.push(newPath);
+  }
 
   const sidebarContent = (
     <div className="flex flex-col h-full">
       {/* Header */}
       <div className="p-5 border-b border-border">
-        <Link href="/" className="block" onClick={() => setMobileOpen(false)}>
+        <Link href={`/${locale}`} className="block" onClick={() => setMobileOpen(false)}>
           <h1 className="text-lg font-bold text-indigo-600">
-            OpenHarness 学习
+            {dict.sidebar.title}
           </h1>
           <p className="text-xs text-gray-500 mt-0.5">
-            AI Agent 基础设施入门指南
+            {dict.sidebar.subtitle}
           </p>
         </Link>
         {/* Progress bar */}
         <div className="mt-3">
           <div className="flex justify-between text-xs text-muted-foreground mb-1">
-            <span>学习进度</span>
+            <span>{dict.sidebar.progress}</span>
             <span>
               {completedCount}/{totalCount} ({progressPct}%)
             </span>
           </div>
           <Progress value={progressPct} className="h-1.5" />
-          {completedCount > 0 && (
-            <button
-              onClick={() => {
-                resetProgress();
-                setCompletedSlugs(new Set());
-              }}
-              className="text-xs text-muted-foreground hover:text-foreground transition-colors mt-1"
-            >
-              重置进度
-            </button>
-          )}
         </div>
       </div>
 
@@ -78,8 +90,8 @@ export default function Sidebar() {
             <div className="px-2 py-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               {phase}. {label}
             </div>
-            {items.map((chapter, idx) => {
-              const href = `/chapters/${chapter.slug}`;
+            {items.map((chapter) => {
+              const href = `/${locale}/chapters/${chapter.slug}`;
               const isActive = pathname === href;
               const isCompleted = completedSlugs.has(chapter.slug);
               const chapterNum =
@@ -115,8 +127,25 @@ export default function Sidebar() {
         ))}
       </nav>
 
-      {/* Footer: dark mode toggle */}
-      <div className="p-3 border-t border-border">
+      {/* Footer */}
+      <div className="p-3 border-t border-border space-y-1">
+        {/* Language switcher */}
+        <div className="flex gap-1 px-2 py-1">
+          {locales.map((l) => (
+            <button
+              key={l}
+              onClick={() => switchLocale(l)}
+              className={`px-2.5 py-1 rounded-md text-xs font-medium transition-colors ${
+                l === locale
+                  ? "bg-primary/10 text-primary"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
+              }`}
+            >
+              {localeLabels[l]}
+            </button>
+          ))}
+        </div>
+        {/* Dark mode toggle */}
         <Button
           variant="ghost"
           size="sm"
@@ -128,7 +157,7 @@ export default function Sidebar() {
             className="size-4"
             strokeWidth={1.5}
           />
-          {theme === "dark" ? "浅色模式" : "深色模式"}
+          {theme === "dark" ? dict.sidebar.lightMode : dict.sidebar.darkMode}
         </Button>
       </div>
     </div>
